@@ -26,8 +26,15 @@ public class LpChatActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lp_chat);
 
-		//initial help text:
-		messages.add("Send a message to our live service reps for immediate help");
+		if (LpChatManager.messages.size() > 0)
+		{
+			messages = LpChatManager.messages;
+			chatStarted = true;
+		}
+		else
+			//initial help text:
+			messages.add("Send a message to our live service reps for immediate help");
+		
 		mainListView = (ListView) findViewById(R.id.mainListView);
 
 		Button sendButton = (Button) findViewById(R.id.sendButton);
@@ -62,8 +69,12 @@ public class LpChatActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				//if (chatStarted)
-				//		LpChatManager.displayButton();
+				if (chatStarted)
+				{
+					LpChatManager.messages = messages;
+					LpChatManager.displayLiveChatButton();
+				}
+				
 				finish();
 			}
 		});
